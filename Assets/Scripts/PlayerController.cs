@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -10,6 +11,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float controlSpeed = 10f;
     [SerializeField] float xRange = 9f; //go from  -value to +value
     [SerializeField] float yRange = 4f; // go from - value to + value
+
+    //Field for rotation 
+    [SerializeField] float positionPitchFactor = -2f;
+    [SerializeField] float controlPitchFactor = -15f;
+
+    [SerializeField] float positionYawFactor = 2f;
+    [SerializeField] float controlThrowFactor = -20f;
+    float horizontalThrow, verticalThrow;
 
 
     //We have to enable the new system for input 
@@ -41,11 +50,11 @@ public class PlayerController : MonoBehaviour
     //    float vorizontalThrow = Input.GetAxis("Vertical");
     //    Debug.Log(horizontalThrow);
     //    Debug.Log(vorizontalThrow);
-    float horizontalThrow = movement.ReadValue<Vector2>().x;
-    float verticalThrow = movement.ReadValue<Vector2>().y;
+     horizontalThrow = movement.ReadValue<Vector2>().x;
+     verticalThrow = movement.ReadValue<Vector2>().y;
 
-    float xOffset = horizontalThrow * Time.deltaTime * controlSpeed;
-    float yOffset = verticalThrow * Time.deltaTime * controlSpeed;
+     float xOffset = horizontalThrow * Time.deltaTime * controlSpeed;
+     float yOffset = verticalThrow * Time.deltaTime * controlSpeed;
 
     float newXPosition = transform.localPosition.x + xOffset ;
     float newYPostion = transform.localPosition.y + yOffset;
@@ -61,8 +70,15 @@ public class PlayerController : MonoBehaviour
 
     void RotatePlayer()
     {
-        transform.localRotation = Quaternion.Euler(-30f,30f,0f);
+        float pitchDueToPosition = transform.localPosition.y * positionPitchFactor;
+        float pitchDueToControlThrow = verticalThrow * controlPitchFactor;
+
+        float pitch = pitchDueToPosition + pitchDueToControlThrow;
+
+        float yaw = transform.localPosition.x * positionYawFactor;
+        float roll = horizontalThrow * controlThrowFactor;
         
+        transform.localRotation = Quaternion.Euler(pitch,yaw,roll);
     }
 
 }
