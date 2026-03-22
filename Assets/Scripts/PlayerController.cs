@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-
+    
+    [SerializeField] float lerpSpeed = 15f;
     [SerializeField] InputAction movement;
+
+    [SerializeField] InputAction fire;
     [SerializeField] float controlSpeed = 10f;
     [SerializeField] float xRange = 9f; //go from  -value to +value
     [SerializeField] float yRange = 4f; // go from - value to + value
@@ -21,19 +23,24 @@ public class PlayerController : MonoBehaviour
     float horizontalThrow, verticalThrow;
 
 
+
+   
+
     //We have to enable the new system for input 
     private void OnEnable() {
         movement.Enable();
+        fire.Enable();
     }
 
     private void OnDisable() {
         movement.Disable();
+        fire.Disable();
     }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+       // SpawnEnemy();
     }
 
     // Update is called once per frame
@@ -41,7 +48,10 @@ public class PlayerController : MonoBehaviour
     {
         MovePlayer();
         RotatePlayer();
+        ProcessFiring();
     }
+
+
 
     //move rocket 
     void MovePlayer()
@@ -75,10 +85,28 @@ public class PlayerController : MonoBehaviour
 
         float pitch = pitchDueToPosition + pitchDueToControlThrow;
 
+       
+
         float yaw = transform.localPosition.x * positionYawFactor;
         float roll = horizontalThrow * controlThrowFactor;
+
+        Quaternion targetRotation = Quaternion.Euler(pitch, yaw, roll);
         
-        transform.localRotation = Quaternion.Euler(pitch,yaw,roll);
+        transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, Time.deltaTime * lerpSpeed);
+    }
+
+    void ProcessFiring()
+    {
+        // if the player pushes fire button then print shooting else don't print shooting
+        //for old control system
+        //if (Input.GetButton("Fire1"))
+        //{
+        //    Debug.Log("Shooting");
+        //}
+        if(fire.WasPressedThisFrame())
+        {
+            Debug.Log("Shooting");
+        }
     }
 
 }
