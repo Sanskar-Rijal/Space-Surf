@@ -5,12 +5,12 @@ using UnityEngine;
 public class Enemy : MonoBehaviour
 {
 
-    [SerializeField] GameObject deathVFX;
+    [SerializeField] GameObject deathFX;
     [SerializeField] GameObject hitVFX;
     [SerializeField] int ScorePerHit=15;
 
     [SerializeField] int hitPoints = 20;
-    
+
     GameObject parentGameObject;
     ScoreBoard scoreBoard;
 
@@ -52,8 +52,8 @@ public class Enemy : MonoBehaviour
     {
         //Increase Score when enemy is killed;
         scoreBoard.IncreaseScore(ScorePerHit);
-        GameObject vfx = Instantiate(deathVFX, transform.position, Quaternion.identity); //Quaternion.identiy menas we dont need rotation
-        vfx.transform.parent = parentGameObject.transform; //putting the vfx in the parentGameObject object to keep the hierarchy clean
+        GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity); //Quaternion.identiy menas we dont need rotation
+        fx.transform.parent = parentGameObject.transform; //putting the vfx in the parentGameObject object to keep the hierarchy clean
         Destroy(gameObject);
     }
 }

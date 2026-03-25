@@ -11,6 +11,7 @@ public class CollisionHandler : MonoBehaviour
 
     MeshRenderer playerShip;
 
+    AudioSource crashedSound;
       //Get Movement Script from Player 
     PlayerController playerController;
     BoxCollider playerCollider;
@@ -20,6 +21,7 @@ public class CollisionHandler : MonoBehaviour
         playerShip = GetComponent<MeshRenderer>();
         playerController = GetComponent<PlayerController>();
         playerCollider = GetComponent<BoxCollider>();
+        crashedSound = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other) {
@@ -30,6 +32,7 @@ public class CollisionHandler : MonoBehaviour
        playerCollider.enabled = false; 
        //show boom boom particles
         crashParticles.Play();
+        crashedSound.Play();
         ReloadGame();
     }
 
