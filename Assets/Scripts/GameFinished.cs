@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Playables;
+using UnityEngine.SceneManagement;
 
 public class GameFinished : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class GameFinished : MonoBehaviour
 
     private void GameFinish(PlayableDirector obj)
     {
-        Debug.Log("Game Finished");
+       SceneManager.LoadScene("spaceShips"); 
     }
 
 }
