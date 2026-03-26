@@ -51,7 +51,8 @@ public class Enemy : MonoBehaviour
     private void EnemyKilled()
     {
         //Increase Score when enemy is killed;
-        scoreBoard.IncreaseScore(ScorePerHit);
+        //scoreBoard.IncreaseScore(ScorePerHit);
+        ScoreManager.Instance.AddScore(ScorePerHit);
         GameObject fx = Instantiate(deathFX, transform.position, Quaternion.identity); //Quaternion.identiy menas we dont need rotation
         fx.transform.parent = parentGameObject.transform; //putting the vfx in the parentGameObject object to keep the hierarchy clean
         Destroy(gameObject);

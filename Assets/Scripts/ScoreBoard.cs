@@ -6,17 +6,28 @@ using UnityEngine;
 
 public class ScoreBoard : MonoBehaviour
 {
-    int score;
+    // int score;
+    // TMP_Text scoreText;
+
+    // private void Start() {
+    //     scoreText = GetComponent<TMP_Text>();
+    //     scoreText.text ="Kill enemies";
+    // }
+
+    // public void IncreaseScore(int amountToIncrease)
+    // {
+    //     score += amountToIncrease;
+    //     scoreText.text = score.ToString();
+    // }
     TMP_Text scoreText;
 
-    private void Start() {
+    private void Start()
+    {
         scoreText = GetComponent<TMP_Text>();
-        scoreText.text ="Strart";
     }
 
-    public void IncreaseScore(int amountToIncrease)
+    private void Update()
     {
-        score += amountToIncrease;
-        scoreText.text = score.ToString();
+        scoreText.text =ScoreManager.Instance.Score.ToString();
     }
 }

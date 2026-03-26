@@ -58,6 +58,15 @@ public class PlayerController : MonoBehaviour
         MovePlayer();
         RotatePlayer();
         ProcessFiring();
+        ExitGame();
+    }
+
+    void ExitGame()
+    {
+     if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }   
     }
 
 

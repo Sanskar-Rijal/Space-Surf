@@ -26,6 +26,8 @@ public class CollisionHandler : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
        // Debug.Log("triggered with " + other.gameObject.name);
+       //if collision happens lets update our state 
+       GameStateManager.Instance.SetPlayerCrashed();
        // hide player ship
        playerShip.enabled = false; 
        // disable player box collider

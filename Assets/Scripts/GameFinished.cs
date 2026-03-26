@@ -16,7 +16,13 @@ public class GameFinished : MonoBehaviour
 
     private void GameFinish(PlayableDirector obj)
     {
-       SceneManager.LoadScene("spaceShips"); 
+        if(GameStateManager.Instance.playerCrasehed)
+        {
+            GameStateManager.Instance.ResetGameState();
+            //this means player has crashed so don't load final scene
+            return;
+        }
+       SceneManager.LoadScene("FinalScene"); 
     }
 
 }
